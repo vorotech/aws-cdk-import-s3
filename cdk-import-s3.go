@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/aws/aws-cdk-go/awscdk"
-	"github.com/aws/aws-cdk-go/awscdk/awssns"
+	"github.com/aws/aws-cdk-go/awscdk/awss3"
 	"github.com/aws/constructs-go/constructs/v3"
 	"github.com/aws/jsii-runtime-go"
 )
@@ -19,10 +19,10 @@ func NewCdkImportS3Stack(scope constructs.Construct, id string, props *CdkImport
 	stack := awscdk.NewStack(scope, &id, &sprops)
 
 	// The code that defines your stack goes here
-
-	// as an example, here's how you would define an AWS SNS topic:
-	awssns.NewTopic(stack, jsii.String("MyTopic"), &awssns.TopicProps{
-		DisplayName: jsii.String("MyCoolTopic"),
+	awss3.NewBucket(stack, jsii.String("ExistingBucket"), &awss3.BucketProps{
+		AutoDeleteObjects: jsii.Bool(false),
+		BucketName:        jsii.String("bucket-test-import-into-cdk-1231293"),
+		RemovalPolicy:     awscdk.RemovalPolicy_RETAIN,
 	})
 
 	return stack
